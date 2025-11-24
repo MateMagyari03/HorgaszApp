@@ -17,7 +17,7 @@ COPY --from=composer_stage /var/www/html .
 RUN npm install --legacy-peer-deps
 
 # Stage 3: PHP-FPM + Production Build
-FROM php:8.1-fpm-alpine AS fpm_stage
+FROM php:8.2.29-fpm-trixie AS fpm_stage
 
 WORKDIR /var/www/html
 
