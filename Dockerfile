@@ -21,7 +21,7 @@ FROM php:8.2.29-fpm-trixie AS fpm_stage
 
 WORKDIR /var/www/html
 
-# Install PHP dependencies
+# Install PHP dependencies and Nginx
 RUN apt-get update && apt-get install -y \
     bash \
     libpng-dev \
@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libxml2-dev \
+    nginx \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the app files (from previous stage)
@@ -37,11 +38,14 @@ COPY --from=composer_stage /var/www/html .
 # Copy npm files and build frontend assets
 COPY --from=npm_stage /var/www/html .
 
+# Copy Nginx configuration file
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
 # Ensure the correct permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose the port that Traefik will route to
-EXPOSE 9000
+# Expose the ports
+EXPOSE 80 443 9000
 
-# Automatically run migrations on container start
-CMD php artisan migrate --force && php-fpm
+# Start Nginx and PHP-FPM together
+CMD service nginx start && php-fpm
