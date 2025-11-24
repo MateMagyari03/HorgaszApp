@@ -38,14 +38,14 @@ COPY --from=composer_stage /var/www/html .
 # Copy npm files and build frontend assets
 COPY --from=npm_stage /var/www/html .
 
-# Copy Nginx configuration file
+# Copy Nginx configuration
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # Ensure the correct permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose the ports
+# Expose the ports for Nginx and PHP-FPM
 EXPOSE 80 443 9000
 
-# Start Nginx and PHP-FPM together
+# Start both Nginx and PHP-FPM
 CMD service nginx start && php-fpm
