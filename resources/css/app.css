@@ -1,0 +1,320 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes float {
+
+
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+    }
+}
+
+@keyframes shimmer {
+
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+@keyframes slideInUp {
+    from {
+
+        opacity: 0;
+            transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+            transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+
+    from { 
+            opacity: 0; }
+    to {    
+        opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+       
+        transform: scale(0.95);
+    }
+    to {
+       
+        opacity: 1;
+       
+        transform: scale(1);
+    }
+}
+
+@keyframes gradient-shift {
+    0%, 100% {
+         background-position: 0% 50%; }
+    50% { 
+        background-position: 100% 50%;
+     }
+}
+
+@layer base {
+    body {
+        @apply bg-gradient-to-br from-sky-50 via-blue-50/30 to-indigo-50/50 text-slate-900 font-sans;
+        font-family: 'Inter', 'Inter var', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-feature-settings: "cv02", "cv03", "cv04";
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        background-size: 200% 200%;
+        animation: gradient-shift 15s ease infinite;
+    }
+
+    ::selection {
+
+        @apply bg-sky-300 text-slate-900;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-slate-100/50 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gradient-to-b from-sky-400 to-indigo-500 rounded-full transition-all duration-300 hover:from-sky-500 hover:to-indigo-600;
+    }
+}
+
+@layer components {
+    .app-shell {
+        @apply min-h-screen flex bg-gradient-to-br from-sky-50/80 via-white/90 to-indigo-50/80;
+        
+        position: relative;
+    }
+
+    .app-shell::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+           
+            radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .nav-pill {
+        @apply flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 relative overflow-hidden;
+        animation: slideInUp 0.4s ease-out backwards;
+    }
+
+    .nav-pill::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0;
+        background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+        transition: width 0.3s ease;
+    }
+
+    .nav-pill:hover::before {
+
+        width: 100%;
+    }
+
+    .nav-pill-active {
+        @apply bg-gradient-to-r from-sky-50 to-indigo-50 text-sky-900 shadow-md shadow-sky-200/50;
+        animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    .nav-pill-active::before {
+
+        width: 100%;
+        background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.15));
+    }
+
+    .nav-pill-inactive {
+        @apply text-slate-600 hover:text-sky-700 hover:bg-white/80 hover:shadow-sm;
+    }
+
+    .page-section {
+        @apply bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-lg shadow-slate-200/50 ring-1 ring-white/50;
+        animation: fadeIn 0.5s ease-out;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transition: left 0.5s;
+    }
+
+    .page-section:hover {
+
+        @apply shadow-xl shadow-sky-200/30 transform -translate-y-1;
+    }
+
+    .page-section:hover::before {
+        left: 100%;
+    }
+
+    .primary-button {
+        @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 text-white font-semibold px-5 py-3 shadow-lg shadow-sky-500/40;
+        background-size: 200% 200%;
+        animation: gradient-shift 3s ease infinite;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .primary-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .primary-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .primary-button:hover {
+        @apply shadow-xl shadow-sky-500/50 transform scale-105;
+    }
+
+    .primary-button:active {
+        @apply transform scale-95;
+    }
+
+    .secondary-button {
+        @apply inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-slate-200 px-5 py-3 font-semibold text-slate-700;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+
+        background: linear-gradient(to bottom, white, rgba(248, 250, 252, 0.8));
+    }
+
+    .secondary-button:hover {
+        @apply border-sky-300 text-sky-700 bg-gradient-to-br from-sky-50 to-indigo-50 shadow-md transform -translate-y-0.5;
+    }
+
+    .form-field {
+        @apply space-y-1;
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    .form-field label {
+        @apply text-sm font-semibold text-slate-700 tracking-wide;
+    }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+        @apply w-full rounded-2xl border-2 border-slate-200 shadow-sm focus:border-sky-400 focus:ring-4 focus:ring-sky-100 transition-all duration-300 bg-white;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus {
+        @apply transform scale-[1.02] shadow-lg shadow-sky-200/50;
+    }
+
+    .stat-card {
+        @apply page-section relative;
+        animation: scaleIn 0.4s ease-out backwards;
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .catch-card {
+        @apply rounded-2xl border-2 border-slate-100 p-4 space-y-2 transition-all duration-300;
+        animation: slideInUp 0.5s ease-out backwards;
+        background: linear-gradient(to bottom, white, rgba(248, 250, 252, 0.5));
+    }
+
+    .catch-card:nth-child(1) { animation-delay: 0.1s; }
+    .catch-card:nth-child(2) { animation-delay: 0.15s; }
+    .catch-card:nth-child(3) { animation-delay: 0.2s; }
+    .catch-card:nth-child(4) { animation-delay: 0.25s; }
+    .catch-card:nth-child(5) { animation-delay: 0.3s; }
+    .catch-card:nth-child(6) { animation-delay: 0.35s; }
+
+    .catch-card:hover {
+        @apply border-sky-300 shadow-lg shadow-sky-200/30 transform -translate-y-2 scale-[1.02];
+        background: linear-gradient(to bottom, white, rgba(239, 246, 255, 0.8));
+    }
+
+    .float-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .gradient-text {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600;
+        background-size: 200% 200%;
+        animation: gradient-shift 3s ease infinite;
+    }
+
+    .glow-effect {
+        position: relative;
+    }
+
+    .glow-effect::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: inherit;
+        padding: 2px;
+        background: linear-gradient(45deg, rgba(59, 130, 246, 0.4), rgba(99, 102, 241, 0.4));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .glow-effect:hover::after {
+        
+        opacity: 1;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
