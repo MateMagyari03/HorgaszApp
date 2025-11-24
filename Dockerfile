@@ -22,7 +22,15 @@ FROM php:8.1-fpm-alpine AS fpm_stage
 WORKDIR /var/www/html
 
 # Install PHP dependencies
-RUN apk add --no-cache bash libpng libjpeg libfreetype freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev
+RUN apk add --no-cache \
+    bash \
+    libpng \
+    libjpeg-turbo \
+    freetype \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libxml2-dev
 
 # Copy the app files (from previous stage)
 COPY --from=composer_stage /var/www/html .
