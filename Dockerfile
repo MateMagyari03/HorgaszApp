@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    libjpeg-turbo8-dev \
+    libjpeg62-turbo-dev \
     libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
