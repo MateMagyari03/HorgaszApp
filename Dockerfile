@@ -22,15 +22,14 @@ FROM php:8.2.29-fpm-trixie AS fpm_stage
 WORKDIR /var/www/html
 
 # Install PHP dependencies
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     bash \
-    libpng \
-    libjpeg-turbo \
-    freetype \
     libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    libxml2-dev
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg-turbo8-dev \
+    libxml2-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy the app files (from previous stage)
 COPY --from=composer_stage /var/www/html .
