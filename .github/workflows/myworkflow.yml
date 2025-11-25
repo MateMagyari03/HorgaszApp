@@ -1,4 +1,4 @@
-name: Build and Deploy Docker Image
+name: Build and Push HorgaszApp Image
 
 on:
   push:
@@ -11,18 +11,28 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
+        with:
+          install: true
 
-
-      - name: Build Docker Image
+      - name: Build Image (ARM64 compatible)
         run: |
-          docker build --file Dockerfile --tag horgasz-app .
-          docker tag horgasz-app localhost:5000/horgasz-app
+          echo "Building horgasz-app image..."
+          docker build \
+            --platform=linux/arm64 \
+            -f vendor/laravel/sail/runtimes/8.2/Dockerfile \
+            -t horgasz-app .
 
-
-      - name: Push Docker Image
+      - name: Tag Image
         run: |
-          docker push localhost:5000/horgasz-app
+          docker tag horgasz-app localhost:5000/horgasz-app:latest
+
+      - name: Push Image
+        run: |
+          docker push localhost:5000/horgasz-app:latest
+
+      - name: Done
+        run: echo "Image successfully built and pushed to localhost:5000/horgasz-app:latest"

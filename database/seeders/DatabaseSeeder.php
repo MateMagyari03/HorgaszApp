@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $admin = User::create([
+        /*
+            $admin = User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'email_verified_at' => now(),
         ]);
+        */
 
         $userNames = [
             'Nagy Péter', 'Kovács János', 'Tóth István', 'Szabó Gábor', 
