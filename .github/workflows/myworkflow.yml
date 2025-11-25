@@ -35,7 +35,7 @@ jobs:
             echo "Sail not found, installing sail package..."
             composer require laravel/sail --dev --no-interaction
           fi
-          composer install --no-dev --optimize-autoloader --no-interaction
+          composer install --optimize-autoloader --no-interaction
 
       - name: Verify Sail exists
         run: |
