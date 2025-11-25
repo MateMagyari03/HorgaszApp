@@ -18,21 +18,12 @@ jobs:
         with:
           install: true
 
-      - name: Build Image (ARM64 compatible)
+      - name: Build and Push (ARM64, Sail Dockerfile)
         run: |
-          echo "Building horgasz-app image..."
-          docker build \
+          cd "${{ github.workspace }}"
+          docker buildx build \
             --platform=linux/arm64 \
-            -f vendor/laravel/sail/runtimes/8.2/Dockerfile \
-            -t horgasz-app .
-
-      - name: Tag Image
-        run: |
-          docker tag horgasz-app localhost:5000/horgasz-app:latest
-
-      - name: Push Image
-        run: |
-          docker push localhost:5000/horgasz-app:latest
-
-      - name: Done
-        run: echo "Image successfully built and pushed to localhost:5000/horgasz-app:latest"
+            -f "${{ github.workspace }}/vendor/laravel/sail/runtimes/8.2/Dockerfile" \
+            -t localhost:5000/horgasz-app:latest \
+            --push \
+            .
