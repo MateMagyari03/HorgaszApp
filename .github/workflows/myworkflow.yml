@@ -52,8 +52,11 @@ jobs:
         run: |
           cd "${{ github.workspace }}"
           docker buildx build \
-            --platform=linux/arm64 \
-            -f "${{ github.workspace }}/vendor/laravel/sail/runtimes/8.2/Dockerfile" \
-            -t localhost:5000/horgasz-app:latest \
-            --push \
-            .
+          --platform=linux/arm64 \
+          -f "${{ github.workspace }}/vendor/laravel/sail/runtimes/8.2/Dockerfile" \
+          -t localhost:5000/horgasz-app:latest \
+          --build-arg WWWGROUP=1000 \
+          --build-arg WWWUSER=1000 \
+          --push \
+          .
+
