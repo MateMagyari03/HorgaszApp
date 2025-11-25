@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Composer (if not installed)
+      - name: Ensure Composer is installed on the runner
         run: |
           if ! command -v composer >/dev/null 2>&1; then
             echo "Composer not found, installing..."
@@ -28,17 +28,31 @@ jobs:
             rm composer-setup.php
           fi
 
-      - name: Run Composer Install (production optimized)
+      - name: Install dependencies (including Sail)
         run: |
           cd "${{ github.workspace }}"
+          if [ ! -d "vendor/laravel/sail" ]; then
+            echo "Sail not found, installing sail package..."
+            composer require laravel/sail --dev --no-interaction
+          fi
           composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Verify Sail exists
+        run: |
+          if [ ! -f "${{ github.workspace }}/vendor/laravel/sail/runtimes/8.2/Dockerfile" ]; then
+            echo "ERROR: Sail Dockerfile not found!"
+            ls -lah vendor/laravel
+            exit 1
+          else 
+            php artisan sail:install --with=mysql --no-interaction
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
           install: true
 
-      - name: Build and Push (ARM64, Sail Dockerfile)
+      - name: Build and Push (ARM64)
         run: |
           cd "${{ github.workspace }}"
           docker buildx build \
@@ -47,6 +61,3 @@ jobs:
             -t localhost:5000/horgasz-app:latest \
             --push \
             .
-
-      - name: Done
-        run: echo "HorgaszApp image built and pushed successfully!"
