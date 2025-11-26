@@ -40,7 +40,7 @@
 
         @if ($water->kep)
             <div class="rounded-2xl border border-slate-200 overflow-hidden">
-                <img src="{{ asset('storage/' . $water->kep) }}" alt="{{ $water->nev }}" class="w-full h-64 object-cover">
+                <img src="{{ asset($water->kep) }}" alt="{{ $water->nev }}" class="w-full h-64 object-cover">
             </div>
         @endif
 

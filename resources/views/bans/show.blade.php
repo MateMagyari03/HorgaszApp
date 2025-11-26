@@ -21,7 +21,7 @@
             <div class="space-y-6">
                 @if($ban->species->kep)
                     <div class="rounded-3xl overflow-hidden bg-slate-100">
-                        <img src="{{ asset('storage/' . $ban->species->kep) }}" 
+                        <img src="{{ asset($ban->species->kep) }}" 
                              alt="{{ $ban->species->nev }}" 
                              class="w-full h-96 object-cover">
                     </div>

@@ -129,7 +129,7 @@
 
                             @if($record->foto)
                                 <div class="rounded-xl overflow-hidden">
-                                    <img src="{{ asset('storage/' . $record->foto) }}" alt="Fogás kép" class="w-full h-32 object-cover">
+                                    <img src="{{ asset($record->foto) }}" alt="Fogás kép" class="w-full h-32 object-cover">
                                 </div>
                             @endif
                         </div>

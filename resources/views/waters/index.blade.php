@@ -41,7 +41,7 @@
             <div class="rounded-3xl border border-slate-100 bg-white shadow-sm overflow-hidden flex flex-col">
                 <div class="h-48 w-full overflow-hidden">
                     @if ($water->kep)
-                        <img src="{{ asset('waters/' . $water->kep) }}" alt="{{ $water->nev }}" class="w-full h-full object-cover">
+                        <img src="{{ asset($water->kep) }}" alt="{{ $water->nev }}" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400 text-sm">Nincs feltöltött kép</div>
                     @endif

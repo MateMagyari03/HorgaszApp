@@ -281,7 +281,7 @@
                         
                         @if($weeklyTopCatch->foto)
                             <div class="mb-4 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/30 backdrop-blur-sm">
-                                <img src="{{ asset('storage/' . $weeklyTopCatch->foto) }}" 
+                                <img src="{{ asset($weeklyTopCatch->foto) }}" 
                                      alt="{{ $weeklyTopCatch->species->nev ?? 'Fogás kép' }}" 
                                      class="w-full h-48 object-cover">
                             </div>
