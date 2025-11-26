@@ -22,7 +22,7 @@
 
                 @if($water->kep)
                     <div class="rounded-3xl overflow-hidden bg-slate-100">
-                        <img src="{{ asset('public/waters/' . $water->kep) }}" 
+                        <img src="{{ asset('storage/' . $water->kep) }}" 
                              alt="{{ $water->nev }}" 
                              class="w-full h-96 object-cover">
                     </div>
