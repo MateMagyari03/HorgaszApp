@@ -99,9 +99,7 @@
                         <div class="rounded-2xl border border-slate-100 p-4 space-y-3">
                             <div class="flex items-center justify-between">
                                 <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold">
-                                    {
-                                        { $record->species->nev ?? 'Halfaj' }
-                                    }
+                                    {{ $record->species->nev ?? 'Halfaj' }}
 
                                 </span>
                                 <span class="text-xs text-slate-500">{{ $record->datum }}</span>
