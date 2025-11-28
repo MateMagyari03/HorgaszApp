@@ -1,0 +1,27 @@
+name: Build and Push HorgaszApp Image
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          cd "${{ github.workspace }}"
+          composer install --optimize-autoloader --no-interaction
+          npm install && npm run build
+
+      - name: Build and Push (ARM64)
+        run: |
+          cd "${{ github.workspace }}"
+          docker build --file "Dockerfile" --tag horgaszapp .
+          docker tag horgasz-app localhost:5000/horgaszapp
+          docker push localhost:5000/horgaszapp
