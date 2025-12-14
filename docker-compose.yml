@@ -1,7 +1,7 @@
 
 services:
   horgaszapp:
-    image: localhost:5000/horgaszapp
+    image: localhost:5000/matehorgapp
     networks:
       - horgaszapp-network
       - traefik_network
