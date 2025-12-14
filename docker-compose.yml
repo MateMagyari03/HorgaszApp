@@ -9,7 +9,7 @@ services:
       - mysql
     restart: unless-stopped
     volumes:
-      - "/opt/secrets/208149032/1103380314/app_key:ro"
+      - "/opt/secrets/208149032/1103380314/app_key:/run/secrets/app_key:ro"
       - "/opt/secrets/208149032/1103380314/mail_password:/run/secrets/mail_password:ro"
     labels:
       - "traefik.enable=true"
