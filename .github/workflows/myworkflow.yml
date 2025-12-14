@@ -1,0 +1,38 @@
+
+name: dev-workflow.yml
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: |
+          cd "${{ github.workspace }}"
+          composer install --optimize-autoloader --no-interaction
+          npm install && npm run build
+
+      - name: Build and Push (ARM64)
+        run: |
+          cd "${{ github.workspace }}"
+          docker build --file "Dockerfile" --tag matehorgapp .
+          docker tag matehorgapp localhost:5000/matehorgapp
+          docker push localhost:5000/matehorgapp
+
+      - name: Check if secrets exists
+        run: |
+          if [ ! -f /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/app_key ]; then
+            echo "app key does not exist at /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/app_key"
+            echo "THE APPLICATION WILL NOT WORK"
+          fi
+          if [ ! -f /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/mail_password ]; then
+            echo "app key does not exist at /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/mail_password"
+            echo "THE APPLICATION WILL NOT WORK"
+          fi
