@@ -12,8 +12,9 @@ RUN apk add --no-cache \
     php82-zip php82-simplexml  \
     php82-iconv php82-redis php82-bcmath \
     php82-gd php82-exif php82-intl \
-    php82-mysql php82-pdo_mysql; \
-    ln -s /usr/bin/php82 /usr/bin/php
+    php82-mysqli php82-pdo_mysql
+
+RUN ln -s /usr/bin/php82 /usr/bin/php
 
 RUN mkdir -p /run/nginx /var/log/php-fpm /run/php-fpm
 
