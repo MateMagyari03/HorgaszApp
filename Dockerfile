@@ -9,12 +9,11 @@ RUN apk add --no-cache \
     php82-pdo php82-pgsql php82-pdo_pgsql php82-posix  \
     php82-ctype php82-session php82-tokenizer  \
     php82-fileinfo php82-phar php82-curl  \
-    php82-gd php82-zip php82-simplexml  \
+    php82-zip php82-simplexml  \
     php82-iconv php82-redis php82-bcmath \
-    php82-gd php82-exif php82-intl; \
-    php82-mysql php82-pdo_mysql \
-    ln -s /usr/bin/php82 /usr/bin/php || true
-
+    php82-gd php82-exif php82-intl \
+    php82-mysql php82-pdo_mysql; \
+    ln -s /usr/bin/php82 /usr/bin/php
 RUN mkdir -p /run/nginx /var/log/php-fpm /run/php-fpm
 
 COPY nginx.conf /etc/nginx/nginx.conf
