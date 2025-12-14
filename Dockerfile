@@ -14,6 +14,7 @@ RUN apk add --no-cache \
     php82-gd php82-exif php82-intl \
     php82-mysql php82-pdo_mysql; \
     ln -s /usr/bin/php82 /usr/bin/php
+
 RUN mkdir -p /run/nginx /var/log/php-fpm /run/php-fpm
 
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -27,6 +28,8 @@ COPY . /var/www/html
 COPY production.env /var/www/html/.env
 
 RUN mkdir -p /var/www/html/public
+
+RUN addgroup -S nginx && adduser -S -G nginx -s /sbin/nologin nginx
 
 RUN chown -R nginx:nginx /var/www/html && chmod -R 755 /var/www/html
 
