@@ -30,8 +30,6 @@ COPY production.env /var/www/html/.env
 
 RUN mkdir -p /var/www/html/public
 
-RUN addgroup -S nginx && adduser -S -G nginx -s /sbin/nologin nginx
-
 RUN chown -R nginx:nginx /var/www/html && chmod -R 755 /var/www/html
 
 RUN chmod +x /entrypoint.sh
