@@ -6,7 +6,7 @@ services:
       - horgaszapp-network
       - traefik_network
     depends_on:
-      - postgres
+      - mysql
     restart: unless-stopped
     volumes:
       - "/opt/secrets//app_key:/run/secrets/app_key:ro"
