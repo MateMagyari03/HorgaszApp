@@ -1,17 +1,16 @@
-name: Build and Push HorgaszApp Image
 
+name: dev-workflow.yml
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: self-hosted
-
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install dependencies
         run: |
@@ -22,6 +21,17 @@ jobs:
       - name: Build and Push (ARM64)
         run: |
           cd "${{ github.workspace }}"
-          docker build --file "Dockerfile" --tag horgaszapp .
-          docker tag horgasz-app localhost:5000/horgaszapp
-          docker push localhost:5000/horgaszapp
+          docker build --file "Dockerfile" --tag matehorgapp .
+          docker tag matehorgapp localhost:5000/matehorgapp
+          docker push localhost:5000/matehorgapp
+
+      - name: Check if secrets exists
+        run: |
+          if [ ! -f /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/app_key ]; then
+            echo "app key does not exist at /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/app_key"
+            echo "THE APPLICATION WILL NOT WORK"
+          fi
+          if [ ! -f /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/mail_password ]; then
+            echo "app key does not exist at /opt/secrets/${{github.repository_owner_id}}/${{github.repository_id}}/mail_password"
+            echo "THE APPLICATION WILL NOT WORK"
+          fi
