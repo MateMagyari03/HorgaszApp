@@ -15,7 +15,7 @@ else
     echo "Mail Password does not exist or is not readable"
 fi
 
-php-fpm84 -F &
+php-fpm82 -F &
 
 php /var/www/html/artisan down
 php /var/www/html/artisan migrate --force
