@@ -8,6 +8,8 @@ use App\Models\Water;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class CatchRecordController extends Controller
 {
@@ -66,7 +68,7 @@ class CatchRecordController extends Controller
             'megjegyzes' => 'nullable|string'
         ]);
 
-
+        
         $path = null;
         if ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('fogások', 'public');
@@ -79,7 +81,7 @@ class CatchRecordController extends Controller
             'datum' => $request->datum,
             'suly' => $request->suly,
             'hossz' => $request->hossz,
-            'foto' => $path,
+            'foto' => 'storage/'.$path,
             'megjegyzes' => $request->megjegyzes,
         ]);
 

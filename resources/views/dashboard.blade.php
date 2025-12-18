@@ -259,7 +259,9 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-slate-500">Heti legnagyobb fogás</p>
-                    <p class="text-xl font-semibold">Gratulálunk a rekordhoz!</p>
+                    @if ($amIWeeklyTop) 
+                        <p class="text-xl font-semibold">Gratulálunk a rekordhoz!</p>
+                    @endif
                 </div>
             </div>
 
@@ -306,6 +308,14 @@
 
                         <p class="text-sm opacity-90 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            {{ $weeklyTopCatch->user->name ?? 'Ismeretlen felhasználó' }}
+                        </p>
+
+                        <p class="text-sm opacity-90 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             {{ $weeklyTopCatch->datum }}
@@ -317,7 +327,7 @@
                     </div>
                 </div>
             @else
-                <p class="text-sm text-slate-500">A héten még nincs rögzített fogásod.</p>
+                <p class="text-sm text-slate-500">Az elmúlt 1 hétben még nem fogott senki sem halat.</p>
             @endif
 
             <div class="rounded-2xl border border-slate-100 p-4 space-y-3">

@@ -59,7 +59,7 @@ class WaterController extends Controller
             'helyszin' => $request->helyszin,
             'tipus' => $request->tipus,
             'leiras' => $request->leiras,
-            'kep' => $path,
+            'kep' => 'storage/'.$path,
         ]);
 
         return redirect()->route('waters.index')->with('success', 'Vízterület sikeresen hozzáadva!');

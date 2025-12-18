@@ -35,11 +35,11 @@ class DashboardController extends Controller
             ->get();
 
 
-        $weeklyTopCatch = CatchRecord::with(['species', 'water'])
-            ->where('user_id', $user->id)
+        $weeklyTopCatch = CatchRecord::with(['species', 'water', 'user'])
             ->whereBetween('datum', [Carbon::now()->subDays(7), Carbon::now()])
             ->orderByDesc('suly')
             ->first();
+            $amIWeeklyTop=$weeklyTopCatch->user_id == Auth::user()->id;
 
         $biggestCatch = CatchRecord::with(['species', 'water'])
             ->where('user_id', $user->id)
@@ -81,7 +81,8 @@ class DashboardController extends Controller
             'weeklyTopCatch',
             'favoriteWaters',
             'stats',
-            'biggestCatch'
+            'biggestCatch',
+            'amIWeeklyTop'
         ));
 
         

@@ -9,13 +9,12 @@ use App\Http\Controllers\BanController;
 use App\Http\Controllers\CatchRecordController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\WelcomeController;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [WelcomeController::class, 'welcome'])
+    ->name('welcome');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -40,7 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/catch-records/user/{userId}', [CatchRecordController::class, 'userCatches'])->name('catch-records.user');
 });
 
-Route::resource('catch-records', CatchRecordController::class)->middleware('auth');
 Route::resource('contests', ContestController::class)->middleware('auth');
 Route::middleware('auth')->group(function () {
     
@@ -49,12 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/versenyeim/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
 });
 
-Route::resource('catch-records', CatchRecordController::class)
-   
-->parameters([
+Route::middleware('auth')->resource('catch-records', CatchRecordController::class)
+    ->parameters([
         'catch-records' => 'catchRecord'
-   
-    ]);
+]);
 
 
 Route::post('/contest/{contest}/register', [RegistrationController::class, 'quickRegister'])

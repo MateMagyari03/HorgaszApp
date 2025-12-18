@@ -114,8 +114,7 @@
                 <div class="rounded-[2.5rem] bg-white/90 backdrop-blur border border-white shadow-2xl p-6 space-y-6">
                     <div class="rounded-3xl overflow-hidden">
                        
-                    <img src=
-                    "https://images.unsplash.com/photo-1461009683693-342af2f2d6ce?auto=format&fit=crop&w=900&q=80"
+                    <img src="{{ asset($weeklyTopCatch->foto) }}"
                              alt="Horgász élmény"
                              class="w-full h-72 object-cover">
                     </div>
@@ -126,9 +125,9 @@
                             <span class="text-xs font-semibold px-3 py-1 rounded-full bg-sky-100 text-sky-700">Ponty</span>
                         </div>
 
-                        <p class="text-3xl font-semibold">8,4 kg</p>
+                        <p class="text-3xl font-semibold">{{ number_format($weeklyTopCatch->suly, 1) }}</p>
 
-                        <p class="text-sm text-slate-500">Tisza-tó | Kovács János</p>
+                        <p class="text-sm text-slate-500">{{ $weeklyTopCatch->water->nev }} | {{ $weeklyTopCatch->user->name }}</p>
 
                         <div class="grid grid-cols-2 gap-3">
 
@@ -137,7 +136,7 @@
                                 <p class="text-xs uppercase tracking-wide text-slate-500">Következő verseny</p>
                                 <p class="font-semibold">Tavaszi Pontyverseny</p>
 
-                                <p class="text-sm text-slate-500">Május 15–17.</p>
+                                <p class="text-sm text-slate-500">{{ $weeklyTopCatch->datum }}</p>
                             </div>
 
 
