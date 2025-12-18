@@ -17,9 +17,16 @@ class UsersSeeder extends Seeder
     private static $records = [];
     private static $userNames = 
         [
-            'Nagy Péter', 'Kovács János', 'Tóth István', 'Szabó Gábor', 
-            'Horváth Márk', 'Varga Zoltán', 'Kiss Balázs', 'Farkas Dávid',
-            'Lakatos Ádám', 'Molnár Tamás'
+            "np" => "Nagy Péter",
+            "kj" => "Kovács János",
+            "ti" => "Tóth István",
+            "szg" => "Szabó Gábor", 
+            "hm" => "Horváth Márk",
+            "vz" => "Varga Zoltán",
+            "kb" => "Kiss Balázs",
+            "fd" => "Farkas Dávid",
+            "la" => "Lakatos Ádám",
+            "mt" => "Molnár Tamás"
         ];
 
 
@@ -28,9 +35,9 @@ class UsersSeeder extends Seeder
         foreach (self::$userNames as $index => $name) {
             self::$records[] = User::create([
                 'name' => $name,
-                'email' => strtolower(str_replace(' ', '.', $name)) . '@gmail.com',
+                'email' => $index. '@gmail.com',
                 'password' => Hash::make('password'),
-                'engedelyszam' => 'HU-2024-' . str_pad($index + 1000, 5, '0', STR_PAD_LEFT),
+                'engedelyszam' => 'HU-2024-' .$index,
                 'role' => 'user',
                 'email_verified_at' => now(),
             ]);

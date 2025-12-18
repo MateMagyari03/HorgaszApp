@@ -89,18 +89,6 @@ class CatchRecordController extends Controller
         return redirect()->route('catch-records.index')->with('success', 'Fogás hozzáadva!');
     }
 
-    public function edit(CatchRecord $catchRecord)
-    {
-
-        $this->authorize('update', $catchRecord);
-
-        $species = Species::all();
-        $waters = Water::all();
-
-        
-        return view('catch_records.edit', compact('catchRecord', 'species', 'waters'));
-   
-    }
 
     public function update(Request $request, CatchRecord $catchRecord)
     {
