@@ -19,6 +19,9 @@ php-fpm82 -F &
 
 php /var/www/html/artisan down
 php /var/www/html/artisan migrate --force
+#php /var/www/html/artisan migrate --force --fresh
+php /var/www/html/artisan seed:if-empty --force
+
 php /var/www/html/artisan up
 
 exec nginx -g "daemon off;"
