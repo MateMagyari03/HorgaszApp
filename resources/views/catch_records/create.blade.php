@@ -88,9 +88,9 @@
             <x-input-error :messages="$errors->get('megjegyzes')" />
         </div>
 
-        <div class="flex gap-3">
-            <button type="submit" class="primary-button">Fogás mentése</button>
-            <a href="{{ route('catch-records.index') }}" class="secondary-button">Mégse</a>
+        <div class="flex flex-col sm:flex-row gap-3">
+            <button type="submit" class="primary-button w-full sm:w-auto">Fogás mentése</button>
+            <a href="{{ route('catch-records.index') }}" class="secondary-button w-full sm:w-auto text-center">Mégse</a>
         </div>
     </form>
 

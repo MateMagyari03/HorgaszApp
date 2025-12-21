@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Schema;
 class SeedIfEmpty extends Command
 {
     /**
-     * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'seed:if-empty
@@ -20,15 +18,11 @@ class SeedIfEmpty extends Command
         {--force : Force in production (passed to db:seed)}';
 
     /**
-     * The console command description.
-     *
      * @var string
      */
     protected $description = 'Command description';
 
-    /**
-     * Execute the console command.
-     */
+    
     public function handle()
     {
         $seeders = $this->option('class');

@@ -6,12 +6,20 @@
     @auth
         @if(auth()->user()->isAdmin() && isset($users))
 
-            {{-- Admin nézetnek a felhasználóknak a listája jelenik--}}
             <section class="page-section space-y-4">
-                <div>
-                    
-                <p class="text-sm text-slate-500">Válassz egy felhasználót a fogásai megtekintéséhez</p>
-                    <p class="text-2xl font-semibold">Felhasználók fogásai</p>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-slate-500">Válassz egy felhasználót a fogásai megtekintéséhez</p>
+                        <p class="text-2xl font-semibold">Felhasználók fogásai</p>
+                    </div>
+                    <a href="{{ route('catch-records.export') }}"
+                       class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md hover:shadow-lg">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v12m0 0l-4-4m4 4l4-4M4 17h16" />
+                        </svg>
+                        CSV letöltése
+                    </a>
                 </div>
 
 
@@ -41,15 +49,25 @@
 
 
         @elseif(isset($userCatches))
-            {{-- Adminnál egy kiv felhasználónak a fogásai látsződnak --}}
             <section class="page-section space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
-
                         <p class="text-sm text-slate-500">Felhasználó fogásai</p>
                         <p class="text-2xl font-semibold">{{ $selectedUser->name }} fogásai</p>
                     </div>
-                    <a href="{{ route('catch-records.index') }}" class="secondary-button">Vissza a listához</a>
+                    <div class="flex items-center gap-3">
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('catch-records.export') }}"
+                               class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md hover:shadow-lg">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 3v12m0 0l-4-4m4 4l4-4M4 17h16" />
+                                </svg>
+                                CSV letöltése
+                            </a>
+                        @endif
+                        <a href="{{ route('catch-records.index') }}" class="secondary-button">Vissza a listához</a>
+                    </div>
                 </div>
 
 
@@ -75,7 +93,6 @@
                 </div>
             </section>
         @else
-            {{-- Normális sima felhasználónak a nézetei --}}
             <section class="page-section space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
@@ -146,7 +163,5 @@
         @endif
 
     @endauth
-
-
 
 </x-app-layout>

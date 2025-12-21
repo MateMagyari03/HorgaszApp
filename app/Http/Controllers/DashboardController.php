@@ -39,7 +39,7 @@ class DashboardController extends Controller
             ->whereBetween('datum', [Carbon::now()->subDays(7), Carbon::now()])
             ->orderByDesc('suly')
             ->first();
-            $amIWeeklyTop=$weeklyTopCatch->user_id == Auth::user()->id;
+            $amIWeeklyTop=$weeklyTopCatch ?->user_id == Auth::user()?->id;
 
         $biggestCatch = CatchRecord::with(['species', 'water'])
             ->where('user_id', $user->id)

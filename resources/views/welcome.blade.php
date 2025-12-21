@@ -110,10 +110,10 @@
         </div>
 
             <div class="relative">
-
                 <div class="rounded-[2.5rem] bg-white/90 backdrop-blur border border-white shadow-2xl p-6 space-y-6">
                     <div class="rounded-3xl overflow-hidden">
-                       
+                    @if($weeklyTopCatch)
+ 
                     <img src="{{ asset($weeklyTopCatch->foto) }}"
                              alt="Horgász élmény"
                              class="w-full h-72 object-cover">
@@ -132,23 +132,30 @@
                         <div class="grid grid-cols-2 gap-3">
 
                             <div class="rounded-2xl bg-slate-50 px-4 py-3">
-
                                 <p class="text-xs uppercase tracking-wide text-slate-500">Következő verseny</p>
-                                <p class="font-semibold">Tavaszi Pontyverseny</p>
-
-                                <p class="text-sm text-slate-500">{{ $weeklyTopCatch->datum }}</p>
+                                @if($upcomingContest)
+                                    <p class="font-semibold">{{ $upcomingContest->nev }}</p>
+                                    <p class="text-sm text-slate-500">{{ \Carbon\Carbon::parse($upcomingContest->datum_kezdete)->format('M d.') }} – {{ \Carbon\Carbon::parse($upcomingContest->datum_vege)->format('M d.') }}</p>
+                                @else
+                                    <p class="font-semibold">Tavaszi Pontyverseny</p>
+                                    <p class="text-sm text-slate-500">{{ $weeklyTopCatch?->datum }}</p>
+                                @endif
                             </div>
-
-
 
                             <div class="rounded-2xl bg-slate-50 px-4 py-3">
                                 <p class="text-xs uppercase tracking-wide text-slate-500">Tilalmi emlékeztető</p>
-                                <p class="font-semibold">Harcsa</p>
-                                <p class="text-sm text-slate-500">Május 2. – június 15.</p>
+                                @if($activeBan && $activeBan->species)
+                                    <p class="font-semibold">{{ $activeBan->species->nev }}</p>
+                                    <p class="text-sm text-slate-500">{{ \Carbon\Carbon::parse($activeBan->kezdete)->format('M d.') }} – {{ \Carbon\Carbon::parse($activeBan->vege)->format('M d.') }}</p>
+                                @else
+                                    <p class="font-semibold">Harcsa</p>
+                                    <p class="text-sm text-slate-500">Május 2. - június 15.</p>
+                                @endif
                             </div>
                         </div>
 
                     </div>
+                    @endif
                 </div>
             </div>
         </main>

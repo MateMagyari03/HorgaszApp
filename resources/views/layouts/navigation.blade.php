@@ -137,31 +137,137 @@
 
 
 
-<div class="lg:hidden w-full border-b border-white/70 bg-white/80 px-4 py-3 backdrop-blur-sm">
-    <div class="flex items-center justify-between gap-4">
+<div class="lg:hidden" x-data="{ mobileMenuOpen: false }">
+    <div class="w-full border-b border-white/70 bg-white/80 px-4 py-3 backdrop-blur-sm sticky top-0 z-40">
+        <div class="flex items-center justify-between gap-3">
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2 flex-shrink-0">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center text-white text-base font-bold shadow-md">
+                    🎣
+                </div>
+                <div class="hidden sm:block">
+                    <p class="font-semibold text-slate-900 text-sm">HorgászApp</p>
+                </div>
+            </a>
 
-        <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center text-white text-lg font-bold">
-                🎣
-            </div>
-            <div>
-
-                <p class="font-semibold text-slate-900">HorgászApp</p>
-
-                <p class="text-xs text-slate-500">menü</p>
-            </div>
-        </a>
-        <div class="flex gap-2 overflow-x-auto">
-
-            @foreach ($navItems as $item)
-                @php $isActive = request()->routeIs($item['pattern']); @endphp
-                <a href="{{ route($item['route']) }}"
-                   class="px-3 py-1.5 rounded-full text-sm font-semibold {{ $isActive ? 'bg-sky-100 text-sky-900' : 'text-slate-500 bg-white' }}">
-                    {{ $item['label'] }}
-                </a>
-            @endforeach
-            
+            <button 
+                @click="mobileMenuOpen = !mobileMenuOpen"
+                class="p-2 rounded-xl bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-200/50 shadow-sm hover:shadow-md transition-all duration-200"
+                aria-label="Menü megnyitása"
+            >
+                <svg x-show="!mobileMenuOpen" class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg x-show="mobileMenuOpen" class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
+    </div>
 
+    <div 
+        x-show="mobileMenuOpen"
+        @click="mobileMenuOpen = false"
+        x-cloak
+        x-transition:enter="transition-opacity ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
+    ></div>
+
+    <div 
+        x-show="mobileMenuOpen"
+        @click.away="mobileMenuOpen = false"
+        x-cloak
+        x-transition:enter="transition ease-out duration-300 transform"
+        x-transition:enter-start="translate-x-full"
+        x-transition:enter-end="translate-x-0"
+        x-transition:leave="transition ease-in duration-200 transform"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="translate-x-full"
+        class="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white/95 backdrop-blur-md shadow-2xl z-50 overflow-y-auto"
+    >
+        <div class="flex flex-col h-full">
+            <div class="px-6 py-6 border-b border-slate-200/50">
+                <div class="flex items-center justify-between mb-6">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-500 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-sky-200/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+                            🎣
+                        </div>
+                        <div>
+                            <p class="text-lg font-bold text-slate-900">HorgászApp</p>
+                            <p class="text-xs text-slate-500">Közösségi platform</p>
+                        </div>
+                    </a>
+                </div>
+
+                @auth
+                <div class="flex items-center gap-3 p-3 rounded-2xl bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-200/50">
+                    @php
+                        $user = Auth::user();
+                        $nameParts = array_filter(explode(' ', $user->name));
+                        $initials = '';
+                        foreach ($nameParts as $part) {
+                            $initials .= strtoupper(mb_substr($part, 0, 1));
+                            if (strlen($initials) === 2) {
+                                break;
+                            }
+                        }
+                    @endphp
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-500 text-white flex items-center justify-center font-bold shadow-md">
+                        <span>{{ $initials ?: 'HU' }}</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-slate-900 truncate">{{ $user->name }}</p>
+                        <p class="text-xs text-slate-500 truncate">{{ $user->email }}</p>
+                    </div>
+                </div>
+                @endauth
+            </div>
+
+            <nav class="flex-1 px-4 py-4 space-y-2">
+                @foreach ($navItems as $item)
+                    @php $isActive = request()->routeIs($item['pattern']); @endphp
+                    <a href="{{ route($item['route']) }}"
+                       @click="mobileMenuOpen = false"
+                       class="flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group {{ $isActive ? 'bg-gradient-to-r from-sky-50 to-indigo-50 text-sky-900 shadow-md shadow-sky-200/50 border border-sky-200/50' : 'text-slate-600 hover:bg-slate-50 hover:text-sky-700' }}">
+                        <span class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 {{ $isActive ? 'bg-white shadow-md ring-2 ring-sky-300/50' : 'bg-slate-50 group-hover:bg-white group-hover:shadow-sm' }}">
+                            <svg class="w-5 h-5 transition-colors duration-200 {{ $isActive ? 'text-sky-600' : 'text-slate-600 group-hover:text-sky-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                {!! $item['icon'] !!}
+                            </svg>
+                        </span>
+                        <span class="font-semibold">{{ $item['label'] }}</span>
+                    </a>
+                @endforeach
+            </nav>
+
+            <div class="px-4 py-4 border-t border-slate-200/50 space-y-3">
+                <div class="rounded-2xl bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-600 text-white p-4 shadow-lg shadow-sky-300/30 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10 blur-xl"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-1">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            <p class="text-xs font-bold uppercase tracking-wider opacity-90">Heti ajánló</p>
+                        </div>
+                        <p class="text-sm font-bold leading-snug">Friss tippek a legjobb horgászvizekhez.</p>
+                    </div>
+                </div>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border-2 border-slate-200 bg-white font-semibold text-slate-700 hover:border-sky-300 hover:text-sky-700 hover:bg-sky-50 transition-all duration-200">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M15 17l5-5-5-5M20 12H9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 5V4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2v-1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Kijelentkezés
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

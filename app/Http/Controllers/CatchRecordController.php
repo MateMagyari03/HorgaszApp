@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
 class CatchRecordController extends Controller
@@ -30,6 +31,45 @@ class CatchRecordController extends Controller
             ->orderBy('datum', 'desc')
             ->get();
         return view('catch_records.index', compact('records'));
+    }
+    public function exportCsv(): StreamedResponse
+    {
+        abort_unless(Auth::user()->isAdmin(), 403, 'Nincs jogosultságod a CSV letöltéséhez.');
+
+        $filename = 'fogasok_' . now()->format('Y-m-d_H-i') . '.csv';
+
+        return response()->streamDownload(function () {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, [
+                'Felhasználó',
+                'Halfaj',
+                'Víz',
+                'Dátum',
+                'Súly (kg)',
+                'Hossz (cm)',
+                'Megjegyzés',
+            ], ';');
+
+            $records = CatchRecord::with(['user', 'species', 'water'])->get();
+
+            foreach ($records as $record) {
+                fputcsv($handle, [
+                    $record->user->name ?? '',
+                    $record->species->nev ?? '',
+                    $record->water->nev ?? '',
+                    $record->datum,
+                    $record->suly,
+                    $record->hossz,
+                    $record->megjegyzes,
+                ], ';');
+            }
+
+            fclose($handle);
+
+        }, $filename, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+        ]);
     }
 
     public function userCatches($userId)

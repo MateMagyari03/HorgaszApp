@@ -99,7 +99,7 @@
                             <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-width="1.5"/>
                         </svg>
                         <div>
-                            <h4 class="font-semibold text-sky-900 mb-1">Horgászviz információk</h4>
+                            <h4 class="font-semibold text-sky-900 mb-1">Horgászvíz információk</h4>
                             <p class="text-sm text-sky-800">
                                 Ez a vízterület része a HorgászApp közösségi adatbázisának. Az információk a felhasználók által megosztott adatokból származnak.
                             </p>

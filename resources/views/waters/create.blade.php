@@ -50,9 +50,9 @@
             >{{ old('leiras') }}</textarea>
          </div>
 
-        <div class="flex gap-3">
-            <button type="submit" class="primary-button">Vízterület mentése</button>
-            <a href="{{ route('waters.index') }}" class="secondary-button">Mégse</a>
+        <div class="flex flex-col sm:flex-row gap-3">
+            <button type="submit" class="primary-button w-full sm:w-auto">Vízterület mentése</button>
+            <a href="{{ route('waters.index') }}" class="secondary-button w-full sm:w-auto text-center">Mégse</a>
         </div>
     </form>
     

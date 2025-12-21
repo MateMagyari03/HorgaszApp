@@ -10,6 +10,7 @@ use App\Http\Controllers\CatchRecordController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Middleware\EnsureUserIsAdmin;
 
 
 
@@ -58,6 +59,11 @@ Route::post('/contest/{contest}/register', [RegistrationController::class, 'quic
 ->name('contest.quickRegister')
 
 ->middleware('auth');
+
+Route::get('/catch-records/export/csv', [CatchRecordController::class, 'exportCsv'])
+    ->name('catch-records.export')
+    ->middleware(['auth', EnsureUserIsAdmin::class]);
+
 
 
 

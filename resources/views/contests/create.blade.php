@@ -64,9 +64,9 @@
             <x-input-error :messages="$errors->get('leiras')" />
         </div>
 
-        <div class="flex gap-3">
-            <button type="submit" class="primary-button">Verseny létrehozása</button>
-            <a href="{{ route('contests.index') }}" class="secondary-button">Mégse</a>
+        <div class="flex flex-col sm:flex-row gap-3">
+            <button type="submit" class="primary-button w-full sm:w-auto">Verseny létrehozása</button>
+            <a href="{{ route('contests.index') }}" class="secondary-button w-full sm:w-auto text-center">Mégse</a>
         </div>
     </form>
 
