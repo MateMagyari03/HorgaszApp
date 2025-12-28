@@ -8,7 +8,7 @@ use Database\Seeders\Concerns\SeedsTable;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UsersSeeder extends Seeder
+class aUsersSeeder extends Seeder
 {
     use SeedsTable;
 

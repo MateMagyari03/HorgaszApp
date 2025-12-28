@@ -15,7 +15,7 @@ use App\Models\Registration;
 
 
 
-class CatchSeeder extends Seeder
+class fCatchSeeder extends Seeder
 {
     use SeedsTable;
 

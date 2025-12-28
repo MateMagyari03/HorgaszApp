@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Database\Seeders\Concerns\SeedsTable;
 
-class WatersSeeder extends Seeder
+class bWatersSeeder extends Seeder
 {
     use SeedsTable;
 

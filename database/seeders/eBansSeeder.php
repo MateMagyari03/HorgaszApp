@@ -10,7 +10,7 @@ use App\Models\Ban;
 use Carbon\Carbon;
 
 
-class BansSeeder extends Seeder
+class eBansSeeder extends Seeder
 {
     use SeedsTable;
 

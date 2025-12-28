@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Database\Seeders\Concerns\SeedsTable;
 use App\Models\Contest;
 
-class ContestsSeeder extends Seeder
+class dContestsSeeder extends Seeder
 {
     use SeedsTable;
 

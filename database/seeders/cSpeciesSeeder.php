@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Database\Seeders\Concerns\SeedsTable;
 use App\Models\Species;
 
-class SpeciesSeeder extends Seeder
+class cSpeciesSeeder extends Seeder
 {
     use SeedsTable;
 
