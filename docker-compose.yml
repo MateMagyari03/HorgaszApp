@@ -11,6 +11,7 @@ services:
     volumes:
       - "/opt/secrets/208149032/1103380314/app_key:/run/secrets/app_key:ro"
       - "/opt/secrets/208149032/1103380314/mail_password:/run/secrets/mail_password:ro"
+      - "horgaszapp-storage-public:/var/www/html/storage/app/public"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.horgaszapp.rule=Host(`horgaszapp.abrdns.com`)"
@@ -41,4 +42,6 @@ networks:
     external: true
 volumes:
   sail-mysql:
+    driver: local
+  horgaszapp-storage-public:
     driver: local

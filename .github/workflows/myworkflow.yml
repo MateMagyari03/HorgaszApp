@@ -22,6 +22,7 @@ jobs:
       - name: Build and Push (ARM64)
         run: |
           cd "${{ github.workspace }}"
+          rm -rdf storage/app/public
           docker build --file "Dockerfile" --tag matehorgapp .
           docker tag matehorgapp localhost:5000/matehorgapp
           docker push localhost:5000/matehorgapp
