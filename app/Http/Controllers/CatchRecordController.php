@@ -111,7 +111,7 @@ class CatchRecordController extends Controller
         
         $path = null;
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('fogások', 'public');
+            $path = $request->file('foto')->store('fogasok', 'public');
         }
 
         CatchRecord::create([
@@ -147,7 +147,7 @@ class CatchRecordController extends Controller
 
 
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('fogások', 'public');
+            $path = $request->file('foto')->store('fogasok', 'public');
             $catchRecord->foto = $path;
         }
 

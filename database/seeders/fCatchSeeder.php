@@ -83,7 +83,7 @@ class fCatchSeeder extends Seeder
                 $hossz = round($suly * 15 + rand(-5, 10), 0);
                 
                 $hasPhoto = rand(0, 10) < 3;
-                $foto = $hasPhoto ? 'fogások/' . strtolower(str_replace(' ', '-', $speciesName)) . '-' . rand(1, 5) . '.jpg' : null;
+                $foto = $hasPhoto ? 'fogasok/' . strtolower(str_replace(' ', '-', $speciesName)) . '-' . rand(1, 5) . '.jpg' : null;
                 
                 CatchRecord::create([
                     'user_id' => $user->id,
