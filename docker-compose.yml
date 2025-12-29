@@ -14,9 +14,8 @@ services:
       - "horgaszapp-storage-public:/var/www/html/storage/app/public"
     command: >
       sh -lc "
-      test \"$(stat -c '%U:%G' /var/cache/nginx 2>/dev/null)\" = 'nginx:nginx' \
-        || chown -R nginx:nginx /var/cache/nginx;
-      exec nginx -g 'daemon off;'
+      test \"$(stat -c '%U:%G' /var/www/html/storage/app/public 2>/dev/null)\" = 'nginx:nginx' \
+        || chown -R nginx:nginx /var/www/html/storage/app/public;
       "
     labels:
       - "traefik.enable=true"
