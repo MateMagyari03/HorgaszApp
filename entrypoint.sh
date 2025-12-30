@@ -14,7 +14,8 @@ if [ -f /run/secrets/mail_password ]; then
 else
     echo "Mail Password does not exist or is not readable"
 fi
-
+test \"$(stat -c '%U:%G' /var/www/html/storage/app/public 2>/dev/null)\" = 'nginx:nginx' || chown -R nginx:nginx /var/www/html/storage/app/public
+    
 php-fpm82 -F &
 
 php /var/www/html/artisan down
