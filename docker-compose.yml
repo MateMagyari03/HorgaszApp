@@ -13,10 +13,7 @@ services:
       - "/opt/secrets/208149032/1103380314/mail_password:/run/secrets/mail_password:ro"
       - "horgaszapp-storage-public:/var/www/html/storage/app/public"
     command: >
-      sh -lc "
-      test \"$(stat -c '%U:%G' /var/www/html/storage/app/public 2>/dev/null)\" = 'nginx:nginx' \
-        || chown -R nginx:nginx /var/www/html/storage/app/public;
-      "
+      test \"$(stat -c '%U:%G' /var/www/html/storage/app/public 2>/dev/null)\" = 'nginx:nginx' || chown -R nginx:nginx /var/www/html/storage/app/public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.horgaszapp.rule=Host(`horgaszapp.abrdns.com`)"
