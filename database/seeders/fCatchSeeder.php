@@ -12,6 +12,7 @@ use App\Models\Species;
 use App\Models\Water;
 use App\Models\Contest;
 use App\Models\Registration;
+use Exception;
 
 
 
@@ -84,17 +85,24 @@ class fCatchSeeder extends Seeder
                 
                 $hasPhoto = rand(0, 10) < 3;
                 $foto = $hasPhoto ? 'fogasok/' . strtolower(str_replace(' ', '-', $speciesName)) . '-' . rand(1, 5) . '.jpg' : null;
-                
-                CatchRecord::create([
-                    'user_id' => $user->id,
-                    'species_id' => $species->id,
-                    'water_id' => $water->id,
-                    'datum' => $catchDates[array_rand($catchDates)],
-                    'suly' => $suly,
-                    'hossz' => max(20, $hossz),
-                    'megjegyzes' => rand(0, 3) === 0 ? null : self::$catchDescriptions[array_rand(self::$catchDescriptions)],
-                    'foto' => $foto,
-                ]);
+                $feltoltott = $foto ? "storage/".$foto : $foto;
+                DB::beginTransaction();
+                try{
+                    CatchRecord::create([
+                        'user_id' => $user->id,
+                        'species_id' => $species->id,
+                        'water_id' => $water->id,
+                        'datum' => $catchDates[array_rand($catchDates)],
+                        'suly' => $suly,
+                        'hossz' => max(20, $hossz),
+                        'megjegyzes' => rand(0, 3) === 0 ? null : self::$catchDescriptions[array_rand(self::$catchDescriptions)],
+                        'foto' => $feltoltott,
+                    ]);
+                    copy(public_path($foto), storage_path("app/public/{$foto}"));
+                    DB::commit();
+                }catch(Exception $e){
+                    DB::rollBack();
+                }
             }
         }
 
